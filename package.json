@@ -1,0 +1,16 @@
+{
+  "name": "google-translate",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "tsx ."
+  },
+  "dependencies": {
+    "@vitalets/google-translate-api": "^9.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6"
+  }
+}
