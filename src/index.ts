@@ -20,9 +20,18 @@ async function main() {
   const throttle = new ThrottleStream(delayBetweenChunks);
   const translator = new TranslateStream();
 
+  let retryCount = 0;
+  const maxRetries = 3;
   pipeline(stdinReadable, throttle, translator, stdoutTransform).catch(
-    error => {
-      console.error('Pipeline encountered an error:', error);
+    async error => {
+      console.error(`Pipeline encountered an error: ${error}`);
+      if (retryCount < maxRetries) {
+        console.log(`Retrying (${retryCount + 1}/${maxRetries})...`);
+        retryCount++;
+        await main();
+      } else {
+        console.error('Maximum retries reached. Exiting...');
+      }
     }
   );
 }
